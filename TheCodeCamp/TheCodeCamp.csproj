@@ -189,7 +189,7 @@
     <Compile Include="Data\CampContext.cs" />
     <Compile Include="Data\CampRepository.cs" />
     <Compile Include="Data\CampMappingProfile.cs" />
-    <Compile Include="Data\Models\CampModel.cs" />
+    <Compile Include="Models\CampModel.cs" />
     <Compile Include="Data\Entities\Camp.cs" />
     <Compile Include="Data\Entities\Location.cs" />
     <Compile Include="Data\Entities\Speaker.cs" />
@@ -207,6 +207,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Models\SpeakerModel.cs" />
+    <Compile Include="Models\TalkModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@ namespace TheCodeCamp
             bldr.RegisterInstance(config.CreateMapper())
               .As<IMapper>()
               .SingleInstance();
+
             bldr.RegisterType<CampContext>()
         .InstancePerRequest();
 

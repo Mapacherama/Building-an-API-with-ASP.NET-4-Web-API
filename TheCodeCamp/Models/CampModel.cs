@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,17 @@ namespace TheCodeCamp.Models
 {
     public class CampModel
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Moniker { get; set; }
+        [Required]
         public DateTime EventDate { get; set; } = DateTime.MinValue;
+        [Required]
+        [Range(1, 30)]
         public int Length { get; set; } = 1;
+
+        public ICollection<TalkModel> talks { get; set; }
 
         // Include Location Information
         public string Venue { get; set; }
