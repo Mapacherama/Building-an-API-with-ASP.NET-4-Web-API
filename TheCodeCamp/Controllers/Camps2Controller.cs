@@ -9,20 +9,19 @@ using TheCodeCamp.Models;
 
 namespace TheCodeCamp.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion("1.1")]
-    [RoutePrefix("api/camps")]
-    public class CampsController : ApiController
+    [ApiVersion("2.0")]
+    [RoutePrefix("api/v{version:apiVersion}/camps")]
+    public class Camps2Controller : ApiController
     {
-
         private readonly ICampRepository _repository;
         private readonly IMapper _mapper;
 
-        public CampsController(ICampRepository repository, IMapper mapper)
+        public Camps2Controller(ICampRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
+
         [Route()]
         public async Task<IHttpActionResult> Get(bool includeTalks = false)
         {
@@ -42,7 +41,7 @@ namespace TheCodeCamp.Controllers
             }
         }
 
-        [Route("{moniker}", Name = "GetCamp")]
+        [Route("{moniker}", Name = "GetCamp20")]
         public async Task<IHttpActionResult> Get(string moniker, bool includeTalks = false)
         {
             try
@@ -50,13 +49,14 @@ namespace TheCodeCamp.Controllers
                 var result = await _repository.GetCampAsync(moniker, includeTalks);
                 if (result == null) return NotFound();
 
-                return Ok(_mapper.Map<CampModel>(result));
+                return Ok(new { success = true, camp = _mapper.Map<CampModel>(result) });
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
+
         [Route("searchByDate/{eventDate:datetime}")]
         [HttpGet]
         public async Task<IHttpActionResult> SearchByEventDate(DateTime eventDate, bool includeTalks = false)
@@ -64,32 +64,35 @@ namespace TheCodeCamp.Controllers
             try
             {
                 var result = await _repository.GetAllCampsByEventDate(eventDate, includeTalks);
+
                 return Ok(_mapper.Map<CampModel[]>(result));
+
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
+
         [Route()]
         public async Task<IHttpActionResult> Post(CampModel model)
         {
             try
             {
+                if (await _repository.GetCampAsync(model.Moniker) != null)
+                {
+                    ModelState.AddModelError("Moniker", "Moniker in use");
+                }
 
-                    if(await _repository.GetCampAsync(model.Moniker)!= null)
-                    {
-                        ModelState.AddModelError("Moniker", "Moniker in use");
-                    }
                 if (ModelState.IsValid)
                 {
-
                     var camp = _mapper.Map<Camp>(model);
+
                     _repository.AddCamp(camp);
 
                     if (await _repository.SaveChangesAsync())
                     {
-                        var newModel = _mapper.Map<Camp>(camp);                   
+                        var newModel = _mapper.Map<CampModel>(camp);
 
                         return CreatedAtRoute("GetCamp", new { moniker = newModel.Moniker }, newModel);
                     }
@@ -113,9 +116,9 @@ namespace TheCodeCamp.Controllers
 
                 _mapper.Map(model, camp);
 
-                if(await _repository.SaveChangesAsync())
+                if (await _repository.SaveChangesAsync())
                 {
-                    return Ok(_mapper.Map<Camp>(camp));
+                    return Ok(_mapper.Map<CampModel>(camp));
                 }
                 else
                 {
@@ -126,7 +129,6 @@ namespace TheCodeCamp.Controllers
             {
                 return InternalServerError(ex);
             }
-
         }
 
         [Route("{moniker}")]
@@ -153,9 +155,5 @@ namespace TheCodeCamp.Controllers
                 return InternalServerError(ex);
             }
         }
-
-
-
     }
-    }
-
+}
