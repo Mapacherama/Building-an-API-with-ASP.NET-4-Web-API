@@ -312,3 +312,6 @@ D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\obj\Debug\
 D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\obj\Debug\TheCodeCamp.pdb
 D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\bin\AutoMapper.dll
 D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\bin\AutoMapper.xml
+D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\bin\Microsoft.AspNet.WebApi.Versioning.dll
+D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\bin\Microsoft.AspNet.WebApi.Versioning.pdb
+D:\Building an API\Building-an-API-with-ASP.NET-4-Web-API\TheCodeCamp\bin\Microsoft.AspNet.WebApi.Versioning.xml
